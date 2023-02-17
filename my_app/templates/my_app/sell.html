@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Sell an item</h1>
+    <h2>Fill out the form below to sell an item</h2>
+    {% if form.subject.errors %}
+    <ol>
+        {% for error in form.subject.errors %}
+        <li><strong>{{ error|escape }}</strong></li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+    <form action="{% url 'sell' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="sell">
+{% endblock %}
