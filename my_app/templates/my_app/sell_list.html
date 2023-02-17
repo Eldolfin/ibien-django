@@ -3,14 +3,12 @@
 {% block content %}
     {%for product in my_sells_list%}
     <div class="product">
-        <a class="btn edit" href="{% url 'edit_sell' product.id %}">Edit</a>
+        <a class="button edit" href="{% url 'edit_sell' product.id %}">Edit</a>
         <img src="{{ product.image.url }}" alt="{{ product.name }}">
         <h2>{{ product.name }}</h2>
         <p>{{ product.description }}</p>
         <p><strong>Price:</strong> {{ product.price }}</p>
         <p><strong>Location:</strong> {{ product.location }}</p>
-        <p><strong>Posted by:</strong> {{ product.seller }}</p>
-        <button>Add to Cart</button>
     </div>
     {%endfor%}
 {% endblock %}
