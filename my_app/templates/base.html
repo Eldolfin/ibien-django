@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{% static 'my_app/css/style.css' %}" />
         <link rel="stylesheet" href="{% static 'my_app/css/header.css' %}" />
         <link rel="icon" type="image/x-icon" href="{% static 'my_app/img/icon.png' %}" />
+        {% block extra_head %}{% endblock %}
     </head>
     <body>
         <header class="site-header">

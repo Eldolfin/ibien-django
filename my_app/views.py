@@ -1,4 +1,5 @@
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Sell, UserProfile
 from .forms import SellForm
@@ -15,7 +16,7 @@ class IndexView(generic.ListView):
         return Sell.objects.order_by('-pub_date')[:10]
 
 
-class SellView(generic.CreateView):
+class SellView(generic.CreateView, LoginRequiredMixin):
     model = Sell
     form_class = SellForm
     template_name = 'my_app/sell.html'
@@ -32,7 +33,7 @@ class SellView(generic.CreateView):
         return '/'
 
 
-class MySellsView(generic.ListView):
+class MySellsView(generic.ListView, LoginRequiredMixin):
     template_name = 'my_app/my_sells.html'
     context_object_name = 'my_sells_list'
 
@@ -44,7 +45,7 @@ class MySellsView(generic.ListView):
                 )
 
 
-class EditSellView(generic.UpdateView):
+class EditSellView(generic.UpdateView, LoginRequiredMixin):
     model = Sell
     form_class = SellForm
     template_name = 'my_app/edit_item.html'
@@ -53,9 +54,7 @@ class EditSellView(generic.UpdateView):
         return '/my_sells/'
 
 
-class DeleteSellView(generic.DeleteView):
+class DeleteSellView(generic.DeleteView, LoginRequiredMixin):
     model = Sell
     template_name = 'my_app/delete_item.html'
-
-    def get_success_url(self):
-        return '/my_sells/'
+    success_url = '/my_sells/'

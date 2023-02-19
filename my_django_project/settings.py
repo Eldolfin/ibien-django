@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'my_app.apps.MyAppConfig',
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,6 +83,7 @@ DATABASES = {
         'HOST': 'localhost',
         'USER': 'mysql',
         'PASSWORD': 'mysql',
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 
@@ -133,3 +135,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_images')
 
 MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = "/"
