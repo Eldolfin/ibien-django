@@ -1,4 +1,5 @@
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Sell, UserProfile
 from .forms import SellForm
@@ -21,10 +22,10 @@ class IndexView(generic.ListView):
         return Sell.objects.order_by('-pub_date')[:10]
 
 
-# SellView is the view that allows the user to sell an item.
-# It is the page where the user can fill the form to sell an item.
-# It fullfills the Create part of the CRUD.
-class SellView(generic.CreateView):
+class SellView(generic.CreateView, LoginRequiredMixin):
+    # SellView is the view that allows the user to sell an item.
+    # It is the page where the user can fill the form to sell an item.
+    # It fullfills the Create part of the CRUD.
     model = Sell
     form_class = SellForm
     template_name = 'my_app/sell.html'
@@ -43,10 +44,10 @@ class SellView(generic.CreateView):
         return '/'
 
 
-# MySellsView is the view that shows the list of items
-# that the user has sold.
-# It is there that users can edit their items.
-class MySellsView(generic.ListView):
+class MySellsView(generic.ListView, LoginRequiredMixin):
+    # MySellsView is the view that shows the list of items
+    # that the user has sold.
+    # It is there that users can edit their items.
     template_name = 'my_app/my_sells.html'
     context_object_name = 'my_sells_list'
 
@@ -59,20 +60,21 @@ class MySellsView(generic.ListView):
                 )
 
 
-# EditSellView is the view that allows the user to edit an item.
-# It is also the view that allows the user to delete an item.
-# It fullfills the Update part of the CRUD.
-class EditSellView(generic.UpdateView):
+class EditSellView(generic.UpdateView, LoginRequiredMixin):
+    # EditSellView is the view that allows the user to edit an item.
+    # It is also the view that allows the user to delete an item.
+    # It fullfills the Update part of the CRUD.
     model = Sell
     form_class = SellForm
     template_name = 'my_app/edit_item.html'
     success_url = '/my_sells/'
 
-# DeleteSellView is the view that allows the user to delete an item.
-# It is the page where the user can confirm the deletion of an item.
-# It provides the user with a confirmation page.
-# It fullfills the Delete part of the CRUD.
-class DeleteSellView(generic.DeleteView):
+
+class DeleteSellView(generic.DeleteView, LoginRequiredMixin):
+    # DeleteSellView is the view that allows the user to delete an item.
+    # It is the page where the user can confirm the deletion of an item.
+    # It provides the user with a confirmation page.
+    # It fullfills the Delete part of the CRUD.
     model = Sell
     template_name = 'my_app/delete_item.html'
     success_url = '/my_sells/'

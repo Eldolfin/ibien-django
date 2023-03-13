@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'accounts/css/logout.css' %}" />
+{% endblock %}
+
+{% block content %}
+<h1>Logged out</h1>
+
+<pre>Thanks for spending some money on iBien today :)
+
+    <!-- Just some spacing here to not hide it with the button below. -->
+</pre>
+
+<p><a href="{% url 'login' %}" class="button">Log in again</a></p>
+{% endblock %}
