@@ -1,3 +1,5 @@
+# secrets
+my_django_project/secrets.py
 # Django #
 *.log
 *.pot

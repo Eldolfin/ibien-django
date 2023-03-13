@@ -137,3 +137,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_images')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = "/"
+
+# for password resseting
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "box.le-dauphin.tech"
+EMAIL_PORT = "465"
+# EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = "no-reply-ibien@le-dauphin.tech"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+from .secrets import EMAIL_HOST_PASSWORD
