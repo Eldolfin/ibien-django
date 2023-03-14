@@ -137,6 +137,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded_images')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 # for password resseting
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
