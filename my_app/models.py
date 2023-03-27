@@ -24,7 +24,8 @@ class Sell(models.Model):
     name = models.CharField(max_length=100)
     price = models.FloatField()
     description = models.TextField()
-    image = models.ImageField(upload_to='uploaded_images/', default='default.png')
+    image = models.ImageField(
+        upload_to='uploaded_images/', default='default.png')
     # location of the seller
     location = models.CharField(max_length=100)
     seller = models.ForeignKey(UserProfile, on_delete=models.CASCADE)

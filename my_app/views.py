@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Sell, UserProfile
 from .forms import SellForm
+from .utils import is_safe_url
 
 
 # I make heavy use of the generic views of Django
@@ -22,7 +23,7 @@ class IndexView(generic.ListView):
         return Sell.objects.order_by('-pub_date')[:10]
 
 
-class SellView(generic.CreateView, LoginRequiredMixin):
+class SellView(LoginRequiredMixin, generic.CreateView):
     # SellView is the view that allows the user to sell an item.
     # It is the page where the user can fill the form to sell an item.
     # It fullfills the Create part of the CRUD.
@@ -44,7 +45,7 @@ class SellView(generic.CreateView, LoginRequiredMixin):
         return '/'
 
 
-class MySellsView(generic.ListView, LoginRequiredMixin):
+class MySellsView(LoginRequiredMixin, generic.ListView):
     # MySellsView is the view that shows the list of items
     # that the user has sold.
     # It is there that users can edit their items.
@@ -60,7 +61,7 @@ class MySellsView(generic.ListView, LoginRequiredMixin):
                 )
 
 
-class EditSellView(generic.UpdateView, LoginRequiredMixin):
+class EditSellView(LoginRequiredMixin, generic.UpdateView):
     # EditSellView is the view that allows the user to edit an item.
     # It is also the view that allows the user to delete an item.
     # It fullfills the Update part of the CRUD.
@@ -69,8 +70,15 @@ class EditSellView(generic.UpdateView, LoginRequiredMixin):
     template_name = 'my_app/edit_item.html'
     success_url = '/my_sells/'
 
+    def get_success_url(self):
+        # Sanitize the 'next' parameter
+        next_url = self.request.POST.get('next', '/')
+        if not is_safe_url(next_url, allowed_hosts=self.request.get_host()):
+            next_url = self.success_url
+        return next_url
 
-class DeleteSellView(generic.DeleteView, LoginRequiredMixin):
+
+class DeleteSellView(LoginRequiredMixin, generic.DeleteView):
     # DeleteSellView is the view that allows the user to delete an item.
     # It is the page where the user can confirm the deletion of an item.
     # It provides the user with a confirmation page.

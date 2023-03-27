@@ -1,5 +1,8 @@
 # secrets
 my_django_project/secrets.py
+sent_emails
+uploaded_images/
+
 # Django #
 *.log
 *.pot
