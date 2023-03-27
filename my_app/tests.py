@@ -6,15 +6,6 @@ from .models import Sell, User, UserProfile
 
 
 class IndexViewTestCase(TestCase):
-    def setUp(self):
-        """
-        This method disables the SECURE_SSL_REDIRECT setting for the test.
-        It's needed otherwise the tests will fail.
-        """
-        settings_manager = override_settings(SECURE_SSL_REDIRECT=False)
-        settings_manager.enable()
-        self.addCleanup(settings_manager.disable)
-
     def test_no_items(self):
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
@@ -87,11 +78,6 @@ class SellViewTestCase(TestCase):
             user=self.user, location='Location')
         self.client.login(username='user', password='password')
 
-        # disable SECURE_SSL_REDIRECT for the tests
-        settings_manager = override_settings(SECURE_SSL_REDIRECT=False)
-        settings_manager.enable()
-        self.addCleanup(settings_manager.disable)
-
     def test_sell_view(self):
         response = self.client.get(reverse('sell'))
         # Test that the view returns a successful response and the correct template
@@ -120,11 +106,6 @@ class MySellsViewTestCase(TestCase):
         self.sell2 = Sell.objects.create(
             name='Sell2', price=10, description='Description', seller=self.user_profile)
 
-        # disable SECURE_SSL_REDIRECT for the tests
-        settings_manager = override_settings(SECURE_SSL_REDIRECT=False)
-        settings_manager.enable()
-        self.addCleanup(settings_manager.disable)
-
     def test_my_sells_view(self):
         response = self.client.get(reverse('my_sells'))
         # Test that the view returns a successful response and the correct template
@@ -144,11 +125,6 @@ class EditSellViewTestCase(TestCase):
             name='Test Item', price=20.0, description='Test description',
             image='default.png', location='Testville', seller=self.userprofile)
         self.url = reverse('edit_sell', kwargs={'pk': self.sell.pk})
-
-        # disable SECURE_SSL_REDIRECT for the tests
-        settings_manager = override_settings(SECURE_SSL_REDIRECT=False)
-        settings_manager.enable()
-        self.addCleanup(settings_manager.disable)
 
     def test_view_success_status_code(self):
         self.client.login(username='testuser', password='testpass')
