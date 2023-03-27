@@ -1,7 +1,5 @@
 from pathlib import Path
 import os
-from my_django_project.secrets import EMAIL_HOST_PASSWORD
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -67,12 +65,7 @@ WSGI_APPLICATION = 'my_django_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test',
-        'HOST': 'localhost',
-        'USER': 'mysql',
-        'PASSWORD': 'mysql',
-        'OPTIONS': {'charset': 'utf8mb4'},
+        'ENGINE': 'django.db.backends.sqlite3',
     }
 }
 
@@ -130,9 +123,4 @@ LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "/accounts/login/"
 
 # for password resseting
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "box.le-dauphin.tech"
-EMAIL_PORT = "465"
-EMAIL_USE_SSL = True
-EMAIL_HOST_USER = "no-reply-ibien@le-dauphin.tech"
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
